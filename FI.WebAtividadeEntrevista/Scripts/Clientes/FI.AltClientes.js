@@ -1,5 +1,7 @@
 ﻿
 $(document).ready(function () {
+
+    var id = 0;
     if (obj) {
         $('#formCadastro #Nome').val(obj.Nome);
         $('#formCadastro #CEP').val(obj.CEP);
@@ -10,11 +12,15 @@ $(document).ready(function () {
         $('#formCadastro #Cidade').val(obj.Cidade);
         $('#formCadastro #Logradouro').val(obj.Logradouro);
         $('#formCadastro #Telefone').val(obj.Telefone);
+        $('#formCadastro #CPF').val(obj.CPF);
+
+        id = obj.Id;
+
     }
 
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
-        
+
         $.ajax({
             url: urlPost,
             method: "POST",
@@ -27,29 +33,39 @@ $(document).ready(function () {
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
+                "Telefone": $(this).find("#Telefone").val(),
+                "CPF": $(this).find("#CPF").val()
+
             },
             error:
-            function (r) {
-                if (r.status == 400)
-                    ModalDialog("Ocorreu um erro", r.responseJSON);
-                else if (r.status == 500)
-                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-            },
+                function (r) {
+                    if (r.status === 400)
+                        ModalDialog("Ocorreu um erro", r.responseJSON);
+                    else if (r.status === 500)
+                        ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                },
             success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();                                
-                window.location.href = urlRetorno;
-            }
+                function (r) {
+                    ModalDialog("Sucesso!", r)
+                    $("#formCadastro")[0].reset();
+                    window.location.href = urlRetorno;
+                }
         });
-    })
-    
-})
+    });
+
+    $("#btnBeneficiarios").click(function () {   
+
+        $("#modalBeneficiarios").load("/cliente/Beneficiarios?id=" + id, function () {
+            $("#modalBeneficiarios").modal();
+
+        });
+    });
+
+});
 
 function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
-    var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
+    var texto2 = '<div id="' + random + '" class="modal fade">                                                               ' +
         '        <div class="modal-dialog">                                                                                 ' +
         '            <div class="modal-content">                                                                            ' +
         '                <div class="modal-header">                                                                         ' +
@@ -67,6 +83,6 @@ function ModalDialog(titulo, texto) {
         '  </div><!-- /.modal-dialog -->                                                                                    ' +
         '</div> <!-- /.modal -->                                                                                        ';
 
-    $('body').append(texto);
+    $('body').append(texto2);
     $('#' + random).modal('show');
-}
+};

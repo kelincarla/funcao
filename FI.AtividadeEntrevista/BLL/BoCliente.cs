@@ -68,6 +68,7 @@ namespace FI.AtividadeEntrevista.BLL
             return cli.Pesquisa(iniciarEm,  quantidade, campoOrdenacao, crescente, out qtd);
         }
 
+        
         /// <summary>
         /// VerificaExistencia
         /// </summary>

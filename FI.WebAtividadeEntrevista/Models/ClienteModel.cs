@@ -11,6 +11,12 @@ namespace WebAtividadeEntrevista.Models
     /// </summary>
     public class ClienteModel
     {
+
+        //public ClienteModel()
+        //{
+
+        //    Beneficiarios = new Array();
+        //}
         public long Id { get; set; }
         
         /// <summary>
@@ -66,6 +72,17 @@ namespace WebAtividadeEntrevista.Models
         /// Telefone
         /// </summary>
         public string Telefone { get; set; }
+
+        /// <summary>
+        /// CPF
+        /// </summary>
+        
+        
+        public string CPF { get; set; }
+
+        //public string Beneficiarios { get; set; }
+
+        public string Beneficiarios { get; set; }
 
     }    
 }

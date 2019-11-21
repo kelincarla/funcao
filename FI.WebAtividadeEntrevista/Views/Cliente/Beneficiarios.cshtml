@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebAtividadeEntrevista.Models.BeneficiarioModel>
+
+@{
+    ViewBag.Title = "Beneficiarios";
+    Layout = "";
+}
+<h2>Beneficiarios</h2>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span><span class="sr-only">Fechar</span>
+            </button>
+            <h4 class="modal-title">Beneficiários</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="CPF">CPF:</label>
+                        <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010.011.111-00" maxlength="14">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Nome">Nome:</label>
+                        <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João da silva" maxlength="50">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success btn-md" id="btnBeneficiariosIncluir" onclick="IncluirBeneficiario();" data-cpf="CPF" data-nome="Nome">Incluir</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <table id="gridBeneficiarios" class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">CPF</th>
+                        <th width="50%">Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CPF</td>
+                            <td>@item.Nome</td>
+                            <td><a class="btn btn-primary btn-sm" href="@Url.Action("BeneficiariosAlterar", "Cliente", new { id = item.Id })">Alterar</a></td>
+                            <td><a class="btn btn-primary btn-sm" href="@Url.Action("BeneficiariosExcluir", "Cliente", new { id = item.Id })">Excluir</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+
+
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+
+@section scripts{
+    <script>
+    var urlBeneficiariosAlteracao = '@Url.Action("BeneficiariosAlterar", "Cliente", new { area = "" })';
+        var urlBeneficiariosList = '@Url.Action("BeneficiariosList", "Cliente", new { area = "" })';
+
+
+    </script>
+
+    @Scripts.Render("~/bundles/beneficiarios");
+
+}
